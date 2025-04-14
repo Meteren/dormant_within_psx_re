@@ -145,16 +145,16 @@ Shader "Custom/Plane Shader"
                 return max(0,dot(normal,lightDir));
             }
 
-            float AngularAnnetuation(float3 normalizedLightDir){
+            float AngularAttenuation(float3 normalizedLightDir,float3 spotLightDir,float spotLightOuterCos,float spotLightInnerCos){
                 
                 float cosVal = dot(-normalizedLightDir,normalize(_SpotLightDir));
-                float angularAnnet = smoothstep(_SpotLightOuterCos,_SpotLightInnerCos,cosVal);
-                return angularAnnet;
+                float angularAtten = smoothstep(spotLightOuterCos,spotLightInnerCos,cosVal);
+                return angularAtten;
             }
 
-            float DistanceImpact(float lenght){
-                float distAnnet = saturate(1-lenght/_SpotLightRange);
-                return distAnnet * distAnnet;
+            float DistanceImpact(float lenght, float lightRange){
+                float distAtten = saturate(1-lenght/lightRange);
+                return distAtten * distAtten;
             }
 
             float4 frag (v2f i) : SV_Target
@@ -197,10 +197,10 @@ Shader "Custom/Plane Shader"
                 float spotLightLambert = LambertVal(N,normalizedLightDir);
 
                 //other calculations
-                float angularAnnet = AngularAnnetuation(normalizedLightDir);
-                float distanceImpactVal = DistanceImpact(distance);
-                
-                float4 spotImpact = spotLightLambert * distanceImpactVal * angularAnnet
+                float angularAtten = AngularAttenuation(normalizedLightDir,_SpotLightDir,_SpotLightOuterCos,_SpotLightInnerCos);
+                float distanceImpactVal = DistanceImpact(distance,_SpotLightRange);
+       
+                float4 spotImpact = spotLightLambert * distanceImpactVal * angularAtten
                 * _SpotLightIntensity * _SpotLightColor;
 
                 return mixedGroundRiver * overallDirectionalLight + mixedGroundRiver * spotImpact;
