@@ -79,6 +79,37 @@ MonoBehaviour:
   grilleShift:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1}
+--- !u!114 &-3852585298981107495
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b69f83c68b8c6545a895b4f0d046a65, type: 3}
+  m_Name: FogVolumeProfile
+  m_EditorClassIdentifier: 
+  active: 1
+  fogStart:
+    m_OverrideState: 1
+    m_Value: 11.5
+  fogEnd:
+    m_OverrideState: 1
+    m_Value: 53
+  fogDensity:
+    m_OverrideState: 1
+    m_Value: 1.2
+  fogDistance:
+    m_OverrideState: 1
+    m_Value: 11.8
+  fogColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.6226415, g: 0.6097188, b: 0.6097188, a: 0}
+  isActive:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-2649047749314681680
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -139,6 +170,7 @@ MonoBehaviour:
   m_Name: URP-PSX Volume Profile
   m_EditorClassIdentifier: 
   components:
+  - {fileID: -3852585298981107495}
   - {fileID: 169896938054019971}
   - {fileID: -2649047749314681680}
   - {fileID: -758010384845797820}
@@ -158,10 +190,10 @@ MonoBehaviour:
   active: 1
   fogDensity:
     m_OverrideState: 1
-    m_Value: 2.2
+    m_Value: 1.2
   fogDistance:
     m_OverrideState: 1
-    m_Value: 2.9
+    m_Value: 10
   fogColor:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 0}
@@ -182,7 +214,7 @@ MonoBehaviour:
     m_Value: 458
   noiseScale:
     m_OverrideState: 1
-    m_Value: 837
+    m_Value: 334
   noiseStrength:
     m_OverrideState: 1
-    m_Value: 0.029
+    m_Value: 0

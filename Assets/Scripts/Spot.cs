@@ -9,8 +9,7 @@ public class Spot : MonoBehaviour
     [SerializeField]private Camera cam;
     [Header("Conditions")]
     [SerializeField] bool canLookAt;
-
-
+  
     private void Update()
     {
         if (canLookAt && cam != null)

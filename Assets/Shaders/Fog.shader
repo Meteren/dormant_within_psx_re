@@ -95,10 +95,10 @@ Shader "PostEffect/Fog"
             
             float dist = ComputeDistance(Depth);
             float fog = 1.0 - ComputeFog(dist, _FogDensity);
- 
+
             float screenNoise = cnoise(screenPos * screenParam / _NoiseScale);            
   
-            return lerp(Color, _FogColor * ambientColor , saturate(fog + (screenNoise * _NoiseStrength)) );
+            return lerp(Color,  ambientColor , saturate(fog));
         }
     ENDCG
     

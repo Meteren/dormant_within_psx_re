@@ -25,8 +25,7 @@ namespace PSX
         }
         
     }
-    
-    
+       
     public class FogPass : ScriptableRenderPass
     {
         private static readonly string shaderPath = "PostEffect/Fog";
@@ -47,6 +46,7 @@ namespace PSX
         Fog fog;
         Material fogMaterial;
         RenderTargetIdentifier currentTarget;
+        
     
         public FogPass(RenderPassEvent evt)
         {
@@ -57,6 +57,7 @@ namespace PSX
                 Debug.LogError("Shader not found.");
                 return;
             }
+            fogMaterial = null;
             this.fogMaterial = CoreUtils.CreateEngineMaterial(shader);
         }
     
@@ -78,7 +79,7 @@ namespace PSX
     
             var cmd = CommandBufferPool.Get(k_RenderTag);
             Render(cmd, ref renderingData);
-            context.ExecuteCommandBuffer(cmd);
+            context.ExecuteCommandBuffer(cmd);           
             CommandBufferPool.Release(cmd);
         }
     
