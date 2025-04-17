@@ -94,19 +94,22 @@ MonoBehaviour:
   active: 1
   fogStart:
     m_OverrideState: 1
-    m_Value: 11.5
+    m_Value: 0
   fogEnd:
     m_OverrideState: 1
-    m_Value: 53
+    m_Value: 44.9
   fogDensity:
     m_OverrideState: 1
-    m_Value: 1.2
+    m_Value: 0.08
   fogDistance:
     m_OverrideState: 1
-    m_Value: 11.8
+    m_Value: 25.8
   fogColor:
     m_OverrideState: 1
-    m_Value: {r: 0.6226415, g: 0.6097188, b: 0.6097188, a: 0}
+    m_Value: {r: 0.6528301, g: 0.6528301, b: 0.6528301, a: 0}
+  method:
+    m_OverrideState: 1
+    m_Value: 1
   isActive:
     m_OverrideState: 1
     m_Value: 1

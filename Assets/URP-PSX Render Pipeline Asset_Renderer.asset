@@ -1,31 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8810733311850487629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6534dd185a4f18b50629b58de296b6, type: 3}
-  m_Name: CustomFogFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &-6420923618556130758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7813741425bf9df4b8f6b5a4f6b1f66f, type: 3}
-  m_Name: CRTRenderFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
 --- !u!114 &-3546494271268968163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,11 +43,11 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: 2606515335583478340}
-  - {fileID: -8810733311850487629}
-  - {fileID: -3546494271268968163}
   - {fileID: -475021065130741689}
-  - {fileID: -6420923618556130758}
-  m_RendererFeatureMap: 3a48e961946a35b1b36073f0bbfcb9851d290e1b4052c8ce47f00da8db6268f93aca0b0afd4be4a6
+  - {fileID: -3546494271268968163}
+  - {fileID: 475179516364041877}
+  - {fileID: 2661688963940897182}
+  m_RendererFeatureMap: 3a48e961946a35b147f00da8db6268f91d290e1b4052c8ce95ae6ba5402d98069e5146ae0238f024
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -112,6 +86,19 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &475179516364041877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6534dd185a4f18b50629b58de296b6, type: 3}
+  m_Name: CRTRenderFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &2606515335583478340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,3 +112,16 @@ MonoBehaviour:
   m_Name: Fog
   m_EditorClassIdentifier: 
   m_Active: 0
+--- !u!114 &2661688963940897182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7813741425bf9df4b8f6b5a4f6b1f66f, type: 3}
+  m_Name: CRTRenderFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1

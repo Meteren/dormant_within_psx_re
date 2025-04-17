@@ -6,6 +6,13 @@ using UnityEngine.Rendering;
 [ExecuteInEditMode]
 public class CustomFogController : MonoBehaviour
 {
+
+    public enum Method
+    {
+        linearFog,
+        exponentialFog
+    }
+
     [SerializeField] private VolumeProfile volumeProfile;
     private FogVolumeProfile fogVolumeProfile;
 
@@ -20,6 +27,9 @@ public class CustomFogController : MonoBehaviour
     [SerializeField] private float fogDistance;
     [SerializeField] private bool isActive;
 
+    [SerializeField] private Method method;
+
+
     private void Start()
     {
         volumeProfile.TryGet<FogVolumeProfile>(out fogVolumeProfile);
@@ -28,7 +38,9 @@ public class CustomFogController : MonoBehaviour
     {
         if (fogVolumeProfile == null)
             return;
-     
+
+        fogVolumeProfile.method.value = (float)method;
+
         fogVolumeProfile.fogColor.value = this.fogColor;
         fogVolumeProfile.fogStart.value = this.fogStart;
         fogVolumeProfile.fogEnd.value = this.fogEnd;
@@ -36,7 +48,7 @@ public class CustomFogController : MonoBehaviour
         fogVolumeProfile.fogDensity.value = this.fogDensity;
         fogVolumeProfile.isActive.value = this.isActive;
 
-        Debug.Log($"Fog start:{fogVolumeProfile.fogStart.value}");
+
     }
 
 }

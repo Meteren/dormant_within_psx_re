@@ -2635,8 +2635,8 @@ Camera:
   m_GameObject: {fileID: 298454518}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -6387,6 +6387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 670506801}
+  - component: {fileID: 670506802}
   - component: {fileID: 670506800}
   - component: {fileID: 670506799}
   - component: {fileID: 670506798}
@@ -6526,6 +6527,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &670506802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670506795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee3e6b97890ee942bc7ea38a4bcb1f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeProfile: {fileID: 11400000, guid: 7bbe35cdf5d69e14abbb03eccedaa5bd, type: 2}
+  fogColor: {r: 0.6226415, g: 0.6097188, b: 0.6097188, a: 0}
+  fogStart: 11.5
+  fogEnd: 53
+  fogDensity: 1.2
+  fogDistance: 7.4
+  isActive: 1
 --- !u!1 &679805097
 GameObject:
   m_ObjectHideFlags: 0
@@ -11810,8 +11830,8 @@ Camera:
   m_GameObject: {fileID: 1496184017}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -12255,8 +12275,8 @@ Camera:
   m_GameObject: {fileID: 1515916057}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -14005,8 +14025,8 @@ Camera:
   m_GameObject: {fileID: 1649256911}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

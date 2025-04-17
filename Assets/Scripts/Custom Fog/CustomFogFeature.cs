@@ -64,6 +64,7 @@ public class CustomFogFeature : ScriptableRendererFeature
             fogMaterial.SetFloat("_FogEnd", fogVolumeProfile.fogEnd.value);
             fogMaterial.SetFloat("_FogDistance", fogVolumeProfile.fogDistance.value);
             fogMaterial.SetFloat("_FogDensity", fogVolumeProfile.fogDensity.value);
+            fogMaterial.SetFloat("_FogMethod", fogVolumeProfile.method.value);
 
         }
 
@@ -73,14 +74,11 @@ public class CustomFogFeature : ScriptableRendererFeature
             var source = currentTarget;
             int destination = TempTargetId;
 
-            //getting camera width and height 
             var w = cameraData.camera.scaledPixelWidth;
             var h = cameraData.camera.scaledPixelHeight;
 
-            //setting parameters here 
             cameraData.camera.depthTextureMode = cameraData.camera.depthTextureMode | DepthTextureMode.Depth;
            
-
             int shaderPass = 0;
             cmd.SetGlobalTexture(MainTexId, source);
             cmd.GetTemporaryRT(destination, w, h, 0, FilterMode.Point, RenderTextureFormat.Default);
@@ -97,7 +95,6 @@ public class CustomFogFeature : ScriptableRendererFeature
     public override void Create()
     {
         SetMaterialNull();
-        //Debug.Log($"[Create] fogMaterial before assignment: {fogMaterial}");
 
         var shader = Shader.Find(shaderPath);
         var stack = VolumeManager.instance.stack;
@@ -110,7 +107,6 @@ public class CustomFogFeature : ScriptableRendererFeature
         }
 
         fogMaterial = CoreUtils.CreateEngineMaterial(shader);
-        //Debug.Log($"[Create] fogMaterial before assignment: {fogMaterial}");
         if (fogMaterial == null)
         {
             Debug.Log("Material is empty");

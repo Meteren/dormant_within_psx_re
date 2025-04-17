@@ -8,6 +8,7 @@ Shader "PostEffect/CustomFogShader"
         _FogColor("Fog Color",COLOR) = (1,1,1,1)
         _FogDensity("Fog Density",float) = 0
         _FogDistance("Fog Distance",float) = 0
+        _FogMethod("Fog Method",float) = 0
     }
     SubShader
     {
@@ -37,29 +38,37 @@ Shader "PostEffect/CustomFogShader"
             };
 
             sampler2D _MainTex;
-            sampler2D _NoiseTex;
             sampler2D _CameraDepthTexture;
             float _FogStart;
             float _FogEnd;
             float4 _FogColor;
             float _FogDensity;
             float _FogDistance;
+            float _FogMethod;
               
-            float ComputeDistance(float depth)
-            {
-                float dist = depth * _ProjectionParams.z;
-                dist -= _ProjectionParams.y * _FogDistance;
+            float ComputeDistance(float Depth)
+            {  
+                float dist = LinearEyeDepth(Depth);
+                dist -=  _ProjectionParams.y * _FogDistance;
                 return dist;
             }
         
-            half ComputeFog(float z, float _Density)
+            float ComputeFog(float z)
             {
-                half fog = 0.0;
-                fog = exp2(_Density * z);
-                //fog = _Density * z;
-                //fog = exp2(-fog * fog);
-                return saturate(fog);
+                float fogFactor = exp2(-_FogDensity * z);
+                return saturate(fogFactor);
             }
+
+            float ExponentialFog(float Depth){
+                float dist = ComputeDistance(Depth);
+                float fogFactor = 1 -  ComputeFog(dist);
+                return fogFactor;
+            }        
+
+            float LinearFog(float linearDepth){
+                float fogFactor = (linearDepth - _FogStart) / (_FogEnd - _FogStart);         
+                return fogFactor;
+            }            
 
             v2f vert (appdata v)
             {
@@ -73,20 +82,10 @@ Shader "PostEffect/CustomFogShader"
             {
                 float4 col = tex2D(_MainTex, i.uv);
 
-                //float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,i.uv);
-                //float linearDepth = LinearEyeDepth(depth);
-
-                //float fogFactor = saturate((linearDepth - _FogStart)/ (_FogEnd - _FogStart));
-
-                //float3 blendedImage = lerp(col.rgb,_FogColor.rgb,fogFactor);
-
-
                 float Depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,i.uv);
-                float linearDepth = Linear01Depth(Depth);
-            
-                float dist = ComputeDistance(Depth);
-                float fogFactor = 1.0 - ComputeFog(dist, _FogDensity);
-      
+                float linearDepth = LinearEyeDepth(Depth);
+                           
+                float fogFactor = lerp(LinearFog(linearDepth),ExponentialFog(Depth),_FogMethod);
 
                 return lerp(col,_FogColor,saturate(fogFactor));
             }
