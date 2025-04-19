@@ -44,10 +44,10 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 2606515335583478340}
   - {fileID: -475021065130741689}
-  - {fileID: -3546494271268968163}
-  - {fileID: 475179516364041877}
+  - {fileID: 4017481686601350740}
   - {fileID: 2661688963940897182}
-  m_RendererFeatureMap: 3a48e961946a35b147f00da8db6268f91d290e1b4052c8ce95ae6ba5402d98069e5146ae0238f024
+  - {fileID: -3546494271268968163}
+  m_RendererFeatureMap: 3a48e961946a35b147f00da8db6268f954be82f54ef6c0379e5146ae0238f0241d290e1b4052c8ce
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -86,19 +86,6 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &475179516364041877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6534dd185a4f18b50629b58de296b6, type: 3}
-  m_Name: CRTRenderFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
 --- !u!114 &2606515335583478340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,5 +110,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7813741425bf9df4b8f6b5a4f6b1f66f, type: 3}
   m_Name: CRTRenderFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+--- !u!114 &4017481686601350740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6534dd185a4f18b50629b58de296b6, type: 3}
+  m_Name: PixelationRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1

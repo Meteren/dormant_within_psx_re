@@ -152,8 +152,8 @@ Shader "Custom/Plane Shader"
                 return angularAtten;
             }
 
-            float DistanceImpact(float lenght, float lightRange){
-                float distAtten = saturate(1-lenght/lightRange);
+            float DistanceImpact(float length, float lightRange){
+                float distAtten = saturate(1-length/lightRange);
                 return distAtten * distAtten;
             }
 

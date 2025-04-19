@@ -4901,8 +4901,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 22.745224, y: 4.978648, z: 16.935913}
-  m_Center: {x: -1.8340786, y: 1.4792557, z: -12.3507185}
+  m_Size: {x: 22.745224, y: 7.3668737, z: 17.163465}
+  m_Center: {x: -1.8340516, y: 0.2851429, z: -12.236943}
 --- !u!1 &519677007
 GameObject:
   m_ObjectHideFlags: 0
@@ -6540,12 +6540,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeProfile: {fileID: 11400000, guid: 7bbe35cdf5d69e14abbb03eccedaa5bd, type: 2}
-  fogColor: {r: 0.6226415, g: 0.6097188, b: 0.6097188, a: 0}
-  fogStart: 11.5
-  fogEnd: 53
-  fogDensity: 1.2
-  fogDistance: 7.4
+  fogColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 0}
+  fogStart: 8.4
+  fogEnd: 36.9
+  fogDensity: 0.056
+  fogDistance: 18.9
   isActive: 1
+  method: 1
 --- !u!1 &679805097
 GameObject:
   m_ObjectHideFlags: 0
@@ -15574,8 +15575,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 18.041183, y: 4.978648, z: 16.800245}
-  m_Center: {x: 0.51757854, y: 1.4792557, z: -9.106243}
+  m_Size: {x: 18.041183, y: 7.0681005, z: 16.889782}
+  m_Center: {x: 0.5175913, y: 0.43452954, z: -9.061475}
 --- !u!1 &1849016853
 GameObject:
   m_ObjectHideFlags: 0
@@ -16931,8 +16932,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 16.850069, y: 4.978648, z: 25.882425}
-  m_Center: {x: -3.6086435, y: 1.4792557, z: -16.823992}
+  m_Size: {x: 17.382164, y: 7.532752, z: 25.882423}
+  m_Center: {x: -3.342527, y: 0.20220375, z: -16.824024}
 --- !u!1 &1950105751
 GameObject:
   m_ObjectHideFlags: 0
