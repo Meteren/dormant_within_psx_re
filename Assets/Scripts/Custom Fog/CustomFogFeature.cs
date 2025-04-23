@@ -135,6 +135,7 @@ public class CustomFogFeature : ScriptableRendererFeature
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
     {
         customFogPass.Setup(renderer.cameraColorTargetHandle);
+        
     }
 
 }
