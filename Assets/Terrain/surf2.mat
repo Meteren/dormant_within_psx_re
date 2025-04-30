@@ -64,6 +64,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 76b9ee891b0bcf64198c2482b3433131, type: 3}
         m_Scale: {x: 55, y: 55}
         m_Offset: {x: 0, y: 0}
+    - _LineMask:
+        m_Texture: {fileID: 2800000, guid: fc31c08833a531c488005fcecde625b6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LineTexture:
+        m_Texture: {fileID: 2800000, guid: 43a44cf2379ceca48870c3e5b7f094a6, type: 3}
+        m_Scale: {x: 55, y: 55}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -86,7 +94,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _PathTexture:
         m_Texture: {fileID: 2800000, guid: 669c77852eb55b64b8ca333969f6b5e8, type: 3}
-        m_Scale: {x: 150, y: 150}
+        m_Scale: {x: 55, y: 55}
         m_Offset: {x: 0, y: 0}
     - _RiverMask:
         m_Texture: {fileID: 2800000, guid: 74902b638ee9018499974eaf8dac5432, type: 3}
@@ -97,7 +105,7 @@ Material:
         m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
     - _Road:
-        m_Texture: {fileID: 2800000, guid: 8386b95e89f794640af53e090886aa46, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7bed465e1a39e24c80013ca403856a5, type: 3}
         m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
     - _RoadMask:
