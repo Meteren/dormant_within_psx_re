@@ -89,7 +89,7 @@ Shader "Custom/URP_MultiLight_Shadow"
             
             TEXTURE2D(_LineTexture); SAMPLER(sampler_LineTexture);
             float4 _LineTexture_ST;
-
+            
              
             TEXTURE2D(_LineMask); SAMPLER(sampler_LineMask);
             float4 _LineMask_ST;
