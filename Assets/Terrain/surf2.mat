@@ -154,7 +154,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RiverDepth: 0.029
+    - _RiverDepth: 0.026
     - _RiverIntensity: 3
     - _RiverSpeed: 0.4
     - _RoadIntenisty: 3
@@ -166,7 +166,7 @@ Material:
     - _Surface: 0
     - _WaveAmplitude: 0.002
     - _WaveFrequency: 3000
-    - _WaveSpeed: 0.0002
+    - _WaveSpeed: 0.000114
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

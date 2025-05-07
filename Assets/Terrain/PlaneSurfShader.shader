@@ -31,12 +31,12 @@ Shader "Custom/URP_MultiLight_Shadow"
 
          [Header(Path Channel Setter)]
         _ChannelSetter("Path Channel Mult Vals",FLOAT) = (0,0,0)
+
     }
 
     SubShader
     {
         tags{"RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="Geometry"}
-
         pass
         {
             name "ForwardPass"
