@@ -31,6 +31,7 @@ public class Spot : MonoBehaviour
            
     }
 
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
