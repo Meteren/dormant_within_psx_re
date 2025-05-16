@@ -9,6 +9,7 @@ public class BaseEnemy
     protected Enemy enemy;
     protected List<PathGrid> path;
     protected bool initPlayerPath;
+    protected bool gridsResetted;
     protected PlayerController playerController => 
         GameManager.instance.blackboard.TryGetValue("PlayerController", 
             out PlayerController _playerController) ? _playerController : null;
@@ -18,7 +19,7 @@ public class BaseEnemy
         this.enemy = enemy; 
     }
 
-    public bool TryPointAt(Vector3 toPoint)
+    protected bool TryPointAt(Vector3 toPoint)
     {
         Vector3 direction = toPoint - enemy.transform.position;
         direction.y = 0;
@@ -34,6 +35,9 @@ public class BaseEnemy
             return true;
         }
     }
+
+    protected void SetGrids() => enemy.pathFinder.RePositionGrids();
+        
 }
 
 public class PatrolStrategy : BaseEnemy, IStrategy
@@ -49,21 +53,24 @@ public class PatrolStrategy : BaseEnemy, IStrategy
     public Node.NodeStatus Evaluate()
     {
         Debug.Log("PatrolStrategy");
-        if (!enemy.IsInRange())
+        if (!enemy.IsInRange() && !gridsResetted)
         {
-            enemy.pathFinder.grids.transform.position = enemy.transform.position;
+            SetGrids();
             path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.patrolPoints[patrolIndex].position);
+            gridsResetted = true;
         }
         if (enemy.CanChase())
         {
             initPathConstruct = false;
             coroutineStarted = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
         if (enemy.damageTaken)
         {
             initPlayerPath = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
@@ -93,6 +100,7 @@ public class PatrolStrategy : BaseEnemy, IStrategy
                     else
                         patrolIndex = 0;
                 }
+                gridsResetted = false;
                 path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.patrolPoints[patrolIndex].position);
                 
                 Debug.Log("Path changed");
@@ -120,6 +128,7 @@ public class ChaseStrategy : BaseEnemy, IStrategy
     float chaseSpeedInCloseRange = 1f;
     float chaseSpeedInLongRange = 2.7f;
     float distance = 5f;
+    
 
     public ChaseStrategy(Enemy enemy) : base(enemy)
     {
@@ -128,23 +137,26 @@ public class ChaseStrategy : BaseEnemy, IStrategy
     {
         Debug.Log("ChaseStrategy");
 
-        if (!enemy.IsInRange())
+        if (!enemy.IsInRange() && !gridsResetted)
         {
-            enemy.pathFinder.grids.transform.position = enemy.transform.position;
+            SetGrids();
             path = enemy.pathFinder.DrawPath(enemy.transform.position, playerController.transform.position);
-            Debug.Log("Range resetted");
+            gridsResetted = true;
+            Debug.Log("Grids resetted chase.");
         }
             
         if (enemy.CanAttack())
         {
             enemy.canAttack = true;
             initPlayerPath = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
         if (enemy.damageTaken)
         {
             initPlayerPath = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
@@ -160,6 +172,7 @@ public class ChaseStrategy : BaseEnemy, IStrategy
         {
             initPlayerPath = false;
             enemy.lastSeenPos = path[path.Count - 1].transform.position;
+            gridsResetted = false;
             Debug.Log($"Last seen pos: Y:{path[path.Count - 1].Y} - X:{path[path.Count - 1].X}");
             return Node.NodeStatus.SUCCESS;    
         }
@@ -189,6 +202,7 @@ public class ChaseStrategy : BaseEnemy, IStrategy
                 {
                     List<PathGrid> newPath = enemy.pathFinder.DrawPath(enemy.transform.position, playerController.transform.position);
                     path = newPath;
+                    gridsResetted = false;
                     Debug.Log("Path changed");
                 }
             }
@@ -209,15 +223,18 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
     {
         Debug.Log("MoveToLastSeen Strategy");
 
-        if (!enemy.IsInRange())
+        if (!enemy.IsInRange() && !gridsResetted)
         {
-            enemy.pathFinder.grids.transform.position = enemy.transform.position;
+            SetGrids();
             path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.lastSeenPos);
+            gridsResetted = true;
+            Debug.Log("Grids resetted last seen.");
         }
 
         if (enemy.CanChase())
         {
             initPlayerPath = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
@@ -225,6 +242,7 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
         {
             enemy.canAttack = true;
             initPlayerPath = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
@@ -232,22 +250,22 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
         {
             enemy.idle = false;
             path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.lastSeenPos);
-            foreach (var pathgrid in path)
-            {
-                //Debug.Log($"Y:{pathgrid.Y}--X:{pathgrid.X}");
-            }
+           
             initPlayerPath = true;
         }
         
         if (enemy.damageTaken)
         {
             initPlayerPath = false;
+            gridsResetted = false;
             return Node.NodeStatus.SUCCESS;
         }
 
         if (enemy.isDead)
             return Node.NodeStatus.SUCCESS;
 
+        if(path.Count == 0)
+            return Node.NodeStatus.SUCCESS;
 
         TryPointAt(path[0].transform.position);
 
@@ -256,6 +274,7 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
         if (Vector3.Distance(enemy.transform.position, path[0].transform.position) <= 0.05f)
         {
             path = enemy.pathFinder.DrawPath(enemy.transform.position,enemy.lastSeenPos);
+            gridsResetted = false;
         }
 
         if (Vector3.Distance(enemy.transform.position, enemy.lastSeenPos) <= 0.05f)

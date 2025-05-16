@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     public PathFinder pathFinder;
 
     [Header("LOS")]
-    [SerializeField] private int gridRadius;
+    public int gridRadius;
     [SerializeField] private float checkAreaRadius;
     [SerializeField] private float attackRange;
 
@@ -313,6 +313,6 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawWireSphere(pathFinder.centerGrid.transform.position, GetMaximumRange() / 2);
+        Gizmos.DrawWireSphere(pathFinder.centerGrid.transform.position, GetMaximumRange() / 2);
     }
 }

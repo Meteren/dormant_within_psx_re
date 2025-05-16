@@ -9,6 +9,8 @@ public class PathFinder : MonoBehaviour
     PathGrid[,] pathGrids;
     List<PathGrid> extractedGridList;
 
+    Vector2 bottomSize;
+
     [Header("Reference")]
     [SerializeField] private BoxCollider reference;
 
@@ -44,7 +46,7 @@ public class PathFinder : MonoBehaviour
         pathGrids = new PathGrid[gridLenght, gridLenght];
         Vector3 agentPosition = transform.position;
         Debug.Log("Agent pos:" + agentPosition);
-        Vector2 bottomSize = new Vector2(reference.size.x * transform.lossyScale.x, reference.size.z * transform.lossyScale.z);
+        bottomSize = new Vector2(reference.size.x * transform.lossyScale.x, reference.size.z * transform.lossyScale.z);
         Debug.Log($"Size x: {bottomSize.x} - Size y: {bottomSize.y}");
         Vector3 startPosition = new Vector3(agentPosition.x - 
             (bottomSize.x * radius), agentPosition.y, agentPosition.z + (bottomSize.y * radius));
@@ -188,6 +190,33 @@ public class PathFinder : MonoBehaviour
             }
         }
         return gridList;
+    }
+
+    public void RePositionGrids()
+    {
+        int radius = (gridLenght - 1) / 2;
+        Vector3 agentPosition = transform.position;
+        Vector3 startPosition = new Vector3(agentPosition.x -
+            (bottomSize.x * radius), agentPosition.y, agentPosition.z + (bottomSize.y * radius));
+        float capturedX = startPosition.x;
+        Debug.Log($"Size x: {bottomSize.x} - Size y: {bottomSize.y}");
+
+        int index = 0;
+
+        for (int i = 0; i < pathGrids.GetLength(0); i++)
+        {
+            for (int j = 0; j < pathGrids.GetLength(1); j++)
+            {
+                extractedGridList[index].transform.position = startPosition;              
+                startPosition.x += bottomSize.x;
+                index++;
+            }
+            startPosition.z -= bottomSize.y;
+            startPosition.x = capturedX;
+        }
+        extractedGridList = ExtractGridsToList();
+        centerGrid = pathGrids[radius, radius];
+
     }
 
 }
