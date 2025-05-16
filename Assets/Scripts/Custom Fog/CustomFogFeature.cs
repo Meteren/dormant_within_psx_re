@@ -51,7 +51,6 @@ public class CustomFogFeature : ScriptableRendererFeature
             CommandBufferPool.Release(cb);
 
         }
-
         public override void OnCameraCleanup(CommandBuffer cmd)
         {
             return;

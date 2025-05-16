@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Grid Size Offset")]
+    [SerializeField] private float offset;
     PlayerController playerController => 
         GameManager.instance.blackboard.TryGetValue("PlayerController", out PlayerController _controller) ? _controller : null;
     [Header("Health")]
@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask playerMask;
     [Header("Ray Mask")]
     [SerializeField] private LayerMask rayMask;
+    [Header("Enemy Mask")]
+    [SerializeField] private LayerMask enemyMask;
 
     [Header("Center")]
     public Transform centerPoint;
@@ -61,9 +63,9 @@ public class Enemy : MonoBehaviour
     public Vector3 damagePosition;
 
     [HideInInspector] public Rigidbody rb;
-    
+
     private void Start()
-    {
+    { 
         rb = GetComponent<Rigidbody>();
         enemyAnimator = GetComponent<Animator>();
         playerMask = LayerMask.GetMask("Player");
@@ -156,6 +158,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         SetAnimations();
+        Debug.Log($"In range: {IsInRange()}");
+ 
     }
 
     private void FixedUpdate()
@@ -254,6 +258,16 @@ public class Enemy : MonoBehaviour
         return false;
             
     }
+    public bool CanAttack()
+    {
+        if (Vector3.Distance(playerController.transform.position, transform.position) <= attackRange)
+            return true;
+        return false;
+    }
+
+    public bool IsInRange() => Physics.CheckSphere(pathFinder.centerGrid.transform.position, GetMaximumRange() / 2, enemyMask);
+
+
     private bool IsInLineOfSight()
     {
         Vector3 rayDirection = playerController.centerPoint.position - transform.position;
@@ -277,12 +291,7 @@ public class Enemy : MonoBehaviour
         stagger = false;
         damageTaken = false;
     }
-    public bool CanAttack()
-    {
-        if(Vector3.Distance(playerController.transform.position,transform.position) <= attackRange)
-            return true;
-        return false;
-    }
+   
     public float CalculatePriority(PlayerController p_controller) =>
         Vector3.Distance(p_controller.transform.position, transform.position);
 
@@ -291,5 +300,19 @@ public class Enemy : MonoBehaviour
         ParticleSystem bloodParticle = Instantiate(particleReference);
         bloodParticle.transform.position = position;
         bloodParticle.Play();
+    }
+
+    public float GetMaximumRange()
+    {
+        BoxCollider collider = pathFinder.Reference;
+        float referenceBottom = Mathf.Min(collider.size.x * transform.lossyScale.x, collider.size.z * transform.lossyScale.z);
+        float maxRad = referenceBottom * pathFinder.GridLenght;
+
+        return maxRad + offset;
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.DrawWireSphere(pathFinder.centerGrid.transform.position, GetMaximumRange() / 2);
     }
 }

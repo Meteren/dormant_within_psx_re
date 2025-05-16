@@ -12,7 +12,14 @@ public class PathFinder : MonoBehaviour
     [Header("Reference")]
     [SerializeField] private BoxCollider reference;
 
+    [Header("Path Grids")]
+    public Transform grids;
+
+    public BoxCollider Reference { get { return reference; } }
+
     int gridLenght;
+
+    public int GridLenght { get { return gridLenght; } }
 
     int[,] directions;
 
@@ -50,7 +57,7 @@ public class PathFinder : MonoBehaviour
             {
                 GameObject pathGridObject = new GameObject($"PathGrid {i}-{j}");
                 PathGrid pathGrid = pathGridObject.AddComponent<PathGrid>();
-                pathGrid.InitPathGrid(transform,reference,startPosition,j,i);
+                pathGrid.InitPathGrid(grids,transform,reference,startPosition,j,i);
                 pathGrids[i, j] = pathGrid;
                 startPosition.x += bottomSize.x;
             }

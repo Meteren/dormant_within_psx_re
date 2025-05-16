@@ -49,6 +49,11 @@ public class PatrolStrategy : BaseEnemy, IStrategy
     public Node.NodeStatus Evaluate()
     {
         Debug.Log("PatrolStrategy");
+        if (!enemy.IsInRange())
+        {
+            enemy.pathFinder.grids.transform.position = enemy.transform.position;
+            path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.patrolPoints[patrolIndex].position);
+        }
         if (enemy.CanChase())
         {
             initPathConstruct = false;
@@ -88,8 +93,8 @@ public class PatrolStrategy : BaseEnemy, IStrategy
                     else
                         patrolIndex = 0;
                 }
-                List<PathGrid> newPath = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.patrolPoints[patrolIndex].position);
-                path = newPath;
+                path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.patrolPoints[patrolIndex].position);
+                
                 Debug.Log("Path changed");
 
             }
@@ -123,6 +128,13 @@ public class ChaseStrategy : BaseEnemy, IStrategy
     {
         Debug.Log("ChaseStrategy");
 
+        if (!enemy.IsInRange())
+        {
+            enemy.pathFinder.grids.transform.position = enemy.transform.position;
+            path = enemy.pathFinder.DrawPath(enemy.transform.position, playerController.transform.position);
+            Debug.Log("Range resetted");
+        }
+            
         if (enemy.CanAttack())
         {
             enemy.canAttack = true;
@@ -143,6 +155,7 @@ public class ChaseStrategy : BaseEnemy, IStrategy
             
             initPlayerPath = true;
         }
+
         if (!enemy.CanChase())
         {
             initPlayerPath = false;
@@ -195,6 +208,13 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
     public Node.NodeStatus Evaluate()
     {
         Debug.Log("MoveToLastSeen Strategy");
+
+        if (!enemy.IsInRange())
+        {
+            enemy.pathFinder.grids.transform.position = enemy.transform.position;
+            path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.lastSeenPos);
+        }
+
         if (enemy.CanChase())
         {
             initPlayerPath = false;

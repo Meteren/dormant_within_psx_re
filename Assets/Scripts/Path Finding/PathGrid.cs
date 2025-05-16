@@ -59,7 +59,7 @@ public class PathGrid : MonoBehaviour, IComparable<PathGrid>
         isMovable = objectsOccupyingGrid.Count > 0 ? false : true;
     }
 
-    public void InitPathGrid(Transform agentTransform,BoxCollider boxCollider,Vector3 position, int x, int y)
+    public void InitPathGrid(Transform grids, Transform agentTransform,BoxCollider boxCollider,Vector3 position, int x, int y)
     {
         this.X = x;
         this.Y = y;
@@ -74,7 +74,6 @@ public class PathGrid : MonoBehaviour, IComparable<PathGrid>
         collWorldSize.Scale(agentTransform.lossyScale);
         collider.size = collWorldSize;
         //transform.SetParent(agentTransform);
-        grids = GameObject.Find("Grids").transform;
         transform.SetParent(grids);
     }
 
