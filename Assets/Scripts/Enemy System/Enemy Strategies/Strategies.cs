@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,35 @@ public class BaseEnemy
     }
 
     protected void SetGrids() => enemy.pathFinder.RePositionGrids();
+
+    protected void SetTrail(PathGrid grid)
+    {
+        PathPoint point = new PathPoint(grid.transform.position);
+        if (enemy.startPoint == null)
+            enemy.startPoint = point;
+
+        if(enemy.currentPoint != null)
+            enemy.currentPoint.nextPoint = point;
+
+        enemy.currentPoint = point;
+
+        enemy.trail.Add(point);
+
+    }
+
+    protected void CleanTrail(PathPoint startPoint)
+    {
+        PathPoint start = startPoint;
+        enemy.currentPoint = startPoint;
+        while (start != null)
+        {
+            enemy.trail.Remove(start);
+            start.DeleteIndicator();
+            start = start.nextPoint;
+        }
+
+        enemy.currentPoint.nextPoint = null;     
+    }
         
 }
 
@@ -129,7 +159,6 @@ public class ChaseStrategy : BaseEnemy, IStrategy
     float chaseSpeedInLongRange = 2.7f;
     float distance = 5f;
     
-
     public ChaseStrategy(Enemy enemy) : base(enemy)
     {
     }
@@ -139,8 +168,11 @@ public class ChaseStrategy : BaseEnemy, IStrategy
 
         if (!enemy.IsInRange() && !gridsResetted)
         {
+            if (path.Count != 0)
+                SetTrail(path[path.Count - 1]);
             SetGrids();
             path = enemy.pathFinder.DrawPath(enemy.transform.position, playerController.transform.position);
+                
             gridsResetted = true;
             Debug.Log("Grids resetted chase.");
         }
@@ -166,6 +198,7 @@ public class ChaseStrategy : BaseEnemy, IStrategy
             path = enemy.pathFinder.DrawPath(enemy.transform.position, playerController.transform.position);
             
             initPlayerPath = true;
+      
         }
 
         if (!enemy.CanChase())
@@ -201,6 +234,13 @@ public class ChaseStrategy : BaseEnemy, IStrategy
                 if (Vector3.Distance(enemy.transform.position, path[0].transform.position) <= 0.05f)
                 {
                     List<PathGrid> newPath = enemy.pathFinder.DrawPath(enemy.transform.position, playerController.transform.position);
+   
+                    PathPoint start = enemy.startPoint;
+                    while(start != null)
+                    {
+                        Debug.Log("Trail Position:" + start.Position);
+                        start = start.nextPoint;
+                    }
                     path = newPath;
                     gridsResetted = false;
                     Debug.Log("Path changed");
@@ -224,9 +264,11 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
         Debug.Log("MoveToLastSeen Strategy");
 
         if (!enemy.IsInRange() && !gridsResetted)
-        {
+        {     
             SetGrids();
             path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.lastSeenPos);
+            if(path.Count != 0)
+                SetTrail(path[path.Count - 1]);
             gridsResetted = true;
             Debug.Log("Grids resetted last seen.");
         }
@@ -250,7 +292,7 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
         {
             enemy.idle = false;
             path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.lastSeenPos);
-           
+                    
             initPlayerPath = true;
         }
         
@@ -285,6 +327,74 @@ public class MoveToLastSeenPositionStrategy : BaseEnemy, IStrategy
 
         return Node.NodeStatus.RUNNING;
         
+    }
+}
+
+public class GetBackToPatrolStrategy : BaseEnemy,IStrategy
+{
+    bool initPath;
+    int pathCount;
+    float getBackSpeed = 2.7f;
+    public GetBackToPatrolStrategy(Enemy enemy) : base(enemy)
+    {
+    }
+
+    public Node.NodeStatus Evaluate()
+    {
+        Debug.Log("GetBackToPatrolStrategy");
+        if (!enemy.IsInRange() && !gridsResetted)
+        {
+            SetGrids();
+            path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.trail[pathCount - 2].Position);
+            if (path.Count == 0)
+                path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.trail[pathCount - 3].Position);
+            gridsResetted = true;
+            Debug.Log("Grids resetted chase.");
+        }
+
+        if (enemy.CanAttack())
+        {
+            enemy.canAttack = true;
+            gridsResetted = false;
+            return Node.NodeStatus.SUCCESS;
+        }
+
+        if (!initPath)
+        {
+            pathCount = enemy.trail.Count;
+            path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.trail[pathCount - 2].Position);
+            initPath = true;    
+        }
+
+
+        TryPointAt(path[0].transform.position);
+
+        enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, path[0].transform.position, Time.deltaTime * getBackSpeed);
+
+        if (Vector3.Distance(enemy.transform.position, path[0].transform.position) <= 0.05f)
+        {
+            gridsResetted = false;
+            if (0 >= path.Count - 1)
+            {
+                pathCount--;
+                if (pathCount == 1)
+                {
+                    initPath = false;
+                    enemy.startPoint = null;
+                    enemy.currentPoint = null;
+                    return Node.NodeStatus.SUCCESS;
+                }
+                CleanTrail(enemy.trail[pathCount - 1]);         
+            }
+                      
+            path = enemy.pathFinder.DrawPath(enemy.transform.position, enemy.trail[pathCount-2].Position);
+
+       
+            Debug.Log("Path changed");
+
+        }
+
+        return Node.NodeStatus.RUNNING;
     }
 }
 
@@ -416,3 +526,5 @@ public class DeathStrategy : BaseEnemy, IStrategy
         return Node.NodeStatus.RUNNING; 
     }
 }
+
+

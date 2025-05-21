@@ -83,6 +83,8 @@ public class PathFinder : MonoBehaviour
         PathGrid startGrid = GetClosestGridToPosition(startPosition);
         PathGrid destinationGrid = GetClosestGridToPosition(positionToMove);
 
+        Debug.Log($"Start Grid:{startGrid.Y} - {startGrid.X} ... DestGrid:{destinationGrid.Y} - {destinationGrid.X}");
+
         if (destinationGrid == null || startGrid == null) return new List<PathGrid>();
         
         PriorityQueue<PathGrid> openGrids = new PriorityQueue<PathGrid>();
@@ -176,7 +178,7 @@ public class PathFinder : MonoBehaviour
     {
         List<PathGrid> gridList = extractedGridList;
 
-        return gridList.Aggregate((closest, next) => next.CalculateDistance(position) < closest.CalculateDistance(position) ? next : closest);
+        return gridList.Aggregate((closest, next) => next.CalculateDistance(position) < closest.CalculateDistance(position) && next.isMovable ? next : closest);
     }
 
     private List<PathGrid> ExtractGridsToList()

@@ -64,6 +64,12 @@ public class Enemy : MonoBehaviour
 
     [HideInInspector] public Rigidbody rb;
 
+
+    //Trail System
+    [HideInInspector] public List<PathPoint> trail = new List<PathPoint>();
+    [HideInInspector] public PathPoint startPoint;
+    [HideInInspector] public PathPoint currentPoint;
+
     private void Start()
     { 
         rb = GetComponent<Rigidbody>();
@@ -85,10 +91,12 @@ public class Enemy : MonoBehaviour
         var chaseCondition = new Leaf("ChaseCondition", new Condition(() => CanChase()));
         var chaseStrategy = new Leaf("ChaseStrategy", new ChaseStrategy(this));
         var moveToLastSeenPosStrategy = new Leaf("MoveToLastSeenPos", new MoveToLastSeenPositionStrategy(this));
+        var getBackToPatrolStrategy = new Leaf("GetBackToPatrolStrategy", new GetBackToPatrolStrategy(this));
 
         chaseSequence.AddChild(chaseCondition);
         chaseSequence.AddChild(chaseStrategy);
         chaseSequence.AddChild(moveToLastSeenPosStrategy);
+        chaseSequence.AddChild(getBackToPatrolStrategy);
 
         SequenceNode attackSequence = new SequenceNode("AttackSequence", 20);
         var attackCondition = new Leaf("AttackCondition", new Condition(() => CanAttack()));
